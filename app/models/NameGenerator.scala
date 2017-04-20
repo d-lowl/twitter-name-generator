@@ -23,7 +23,7 @@ class NameGenerator {
 
   def generateNickname: String = {
     val first: Word = r.nextFromList(dict)
-    val second: Noun = r.nextFromList(dict.collect {case a: Noun => a})
+    val second: Noun = r.nextFromList(dict.collect {case (a: Noun) if a != first => a})
 
     first match {
       case x: Noun => first.word + " и " + second.word
