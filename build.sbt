@@ -1,4 +1,4 @@
-name := """play-getting-started"""
+name := """twitter-name-generator"""
 
 version := "1.0-SNAPSHOT"
 

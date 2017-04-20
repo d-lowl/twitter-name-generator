@@ -6,30 +6,17 @@ import play.api.cache.Cache
 import play.api.Play.current
 
 import play.api.db._
+import models.NameGenerator
 
 object Application extends Controller {
+
+  private def nameGenerator: NameGenerator = new NameGenerator
 
   def index = Action {
     Ok(views.html.index(null))
   }
 
-  def db = Action {
-    var out = ""
-    val conn = DB.getConnection()
-    try {
-      val stmt = conn.createStatement
-
-      stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)")
-      stmt.executeUpdate("INSERT INTO ticks VALUES (now())")
-
-      val rs = stmt.executeQuery("SELECT tick FROM ticks")
-
-      while (rs.next) {
-        out += "Read from DB: " + rs.getTimestamp("tick") + "\n"
-      }
-    } finally {
-      conn.close()
-    }
-    Ok(out)
+  def generate = Action {
+    Ok(nameGenerator.generateNickname)
   }
 }
